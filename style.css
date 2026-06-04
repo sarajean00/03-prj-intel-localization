@@ -21,6 +21,48 @@ section {
 header {
   background: #ffffff;
   padding: 2rem 1rem;
+  position: relative;
+}
+
+.accessibility-wrapper {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 60;
+}
+
+.accessibility-menu button {
+  background: transparent;
+  border: 1px solid #c8d2e0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #0d1f44;
+}
+
+.accessibility-menu ul {
+  list-style: none;
+  margin: 0.4rem 0 0 0;
+  padding: 0.25rem;
+  background: #ffffff;
+  border: 1px solid #dfe9f5;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(13,31,68,0.08);
+  min-width: 180px;
+}
+
+.accessibility-menu ul li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  background: transparent;
+}
+
+.accessibility-menu ul li button[aria-checked="true"] {
+  background: #f0f6ff;
 }
 
 .top-nav {
@@ -138,6 +180,25 @@ img {
 
   .page-inner {
     padding: 0 0.75rem;
+  }
+
+  /* Handedness layout helpers for mobile */
+  .hand-right .top-nav {
+    justify-content: flex-end;
+  }
+
+  .hand-left .top-nav {
+    justify-content: flex-start;
+  }
+
+  .hand-right header img {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .hand-left header img {
+    margin-right: auto;
+    margin-left: 0;
   }
 }
 

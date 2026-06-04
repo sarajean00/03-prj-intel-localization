@@ -19,6 +19,15 @@
         <a href="#articles">Articles</a>
         <a href="#subscribe">Subscribe</a>
       </nav>
+      <div class="accessibility-wrapper">
+        <div class="accessibility-menu" id="accessibilityMenu">
+          <button id="accessibilityButton" aria-haspopup="true" aria-expanded="false" aria-controls="accessibilityOptions">Accessibility ▾</button>
+          <ul id="accessibilityOptions" role="menu" hidden>
+            <li role="none"><button role="menuitemradio" data-hand="right" aria-checked="true">Right-handed view</button></li>
+            <li role="none"><button role="menuitemradio" data-hand="left" aria-checked="false">Left-handed view</button></li>
+          </ul>
+        </div>
+      </div>
       <!-- Main Heading -->
       <h1>
         Sustainability Through the Ages
@@ -259,6 +268,61 @@
       observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
       document.addEventListener('DOMContentLoaded', handleLangChange);
       handleLangChange();
+    })();
+  </script>
+  <script>
+    (function () {
+      const storageKey = 'preferredHandedness';
+      const btn = document.getElementById('accessibilityButton');
+      const menu = document.getElementById('accessibilityOptions');
+      const options = menu ? Array.from(menu.querySelectorAll('[role="menuitemradio"]')) : [];
+
+      function applyHand(hand) {
+        document.body.classList.remove('hand-left', 'hand-right');
+        if (hand === 'left') document.body.classList.add('hand-left');
+        else if (hand === 'right') document.body.classList.add('hand-right');
+        // update aria-checked states
+        options.forEach(o => o.setAttribute('aria-checked', o.dataset.hand === hand ? 'true' : 'false'));
+      }
+
+      function openMenu() {
+        menu.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+        menu.querySelector('[role="menuitemradio"]').focus();
+      }
+
+      function closeMenu() {
+        menu.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.focus();
+      }
+
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', () => (menu.hidden ? openMenu() : closeMenu()));
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(); }
+      });
+
+      menu.addEventListener('keydown', (e) => {
+        const idx = options.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') { e.preventDefault(); options[(idx + 1) % options.length].focus(); }
+        if (e.key === 'ArrowUp') { e.preventDefault(); options[(idx - 1 + options.length) % options.length].focus(); }
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const hand = opt.dataset.hand;
+          applyHand(hand);
+          localStorage.setItem(storageKey, hand);
+          closeMenu();
+        });
+      });
+
+      // apply saved preference on load
+      const saved = localStorage.getItem(storageKey);
+      if (saved === 'left' || saved === 'right') applyHand(saved);
     })();
   </script>
 </body>
