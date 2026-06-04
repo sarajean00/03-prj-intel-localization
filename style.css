@@ -92,10 +92,11 @@ header {
 }
 
 header img {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: #e6f0ff;
   padding: 0.65rem;
   border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(4, 71, 179, 0.06);
+  box-shadow: 0 12px 36px rgba(3, 44, 101, 0.12);
   max-width: 140px;
   width: auto;
   height: auto;
