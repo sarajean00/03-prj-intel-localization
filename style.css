@@ -24,6 +24,26 @@ header {
   position: relative;
 }
 
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 69, 197, 0.95) 0%,    
+    rgba(0, 102, 197, 0.45) 40%,
+    rgba(0, 181, 197, 0.18) 65%,
+    transparent 100%
+  );
+}
+
+header > div { position: relative; z-index: 1; }
+
 .accessibility-wrapper {
   position: absolute;
   top: 1rem;
